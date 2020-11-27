@@ -13,4 +13,6 @@
     <string name="welcome">Welcome to Where Are You</string>
     <string name="sign_up">Sign up</string>
     <string name="sign_in_if_account">Already have an account? Click</string>
+    <string name="username_required">Username is required</string>
+    <string name="password_required">Password is required</string>
 </resources>

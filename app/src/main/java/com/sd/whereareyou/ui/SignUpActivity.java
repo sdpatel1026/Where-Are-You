@@ -1,8 +1,5 @@
 package com.sd.whereareyou.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatEditText;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +12,9 @@ import com.couchbase.lite.CouchbaseLiteException;
 import com.couchbase.lite.Database;
 import com.couchbase.lite.DatabaseConfiguration;
 import com.sd.whereareyou.R;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatEditText;
 
 import static com.sd.whereareyou.utils.Constants.USERS_LIST_DB;
 
@@ -79,5 +79,16 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void signUpUser() {
+
+        String username = edtUserName.getText().toString();
+        String password = edtPassword.getText().toString();
+        if (username.isEmpty()) {
+            displayMsg(getResources().getString(R.string.username_required));
+            return;
+        }
+        if (password.isEmpty()) {
+            displayMsg(getResources().getString(R.string.password_required));
+            return;
+        }
     }
 }
