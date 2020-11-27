@@ -87,11 +87,11 @@ public class SplashActivity extends AppCompatActivity {
         Query query = QueryBuilder
                 .select(SelectResult.property(USER_DOC_ID))
                 .from(DataSource.database(userDB))
-
                 .where(Expression.property(IS_LOG_IN).equalTo(Expression.string("true")));
         ResultSet resultSet = query.execute();
-        int size = resultSet.allResults().size();
+
         List<Result> results = resultSet.allResults();
+        int size = results.size();
         //only one user login
         if (size == 1) {
             userDocId = results.get(0).getString(USER_DOC_ID);

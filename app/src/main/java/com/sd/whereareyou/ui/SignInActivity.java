@@ -25,7 +25,6 @@ import com.sd.whereareyou.utils.Constants;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
 
-import static com.sd.whereareyou.utils.Constants.IMAGE;
 import static com.sd.whereareyou.utils.Constants.IS_LOG_IN;
 import static com.sd.whereareyou.utils.Constants.PASSWORD;
 import static com.sd.whereareyou.utils.Constants.UID;
@@ -95,6 +94,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     private void moveToSignUpActivity() {
         Intent intent = new Intent(this, SignUpActivity.class);
         startActivity(intent);
+        finish();
     }
 
     private void signInUser() {
@@ -126,7 +126,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             String userDocId = result.getString(USER_DOC_ID);
             MutableDocument userDocument = userListDb.getDocument(userDocId).toMutable();
             if (userDocument.getString(PASSWORD).equals(password)) {
-                byte[] imageInByte = userDocument.getBlob(IMAGE).getContent();
+                // byte[] imageInByte = userDocument.getBlob(IMAGE).getContent();
                 String UUID = userDocument.getString(UID);
 
                 userDocument.setString(IS_LOG_IN, "true");
@@ -138,7 +138,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 }
 
                 Intent intent = new Intent(SignInActivity.this, HomeActivity.class);
-                intent.putExtra(IMAGE, imageInByte);
+                // intent.putExtra(IMAGE, imageInByte);
                 intent.putExtra(UID, UUID);
                 intent.putExtra(USER_NAME, userName);
                 startActivity(intent);
