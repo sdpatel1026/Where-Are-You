@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Where Are You</string>
+    <string name="welcome_back">Welcome Back,</string>
+    <string name="sign_in_cont">Sign in to continue</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="sign_in">Sign In</string>
+    <string name="user_name">Username</string>
+    <string name="sign_up_for_account">Sign Up for Account?</string>
+    <string name="user_not_exist">Username is not valid or doest not exist.</string>
+    <string name="invalid_password">Password is innvalid.</string>
+    <string name="welcome">Welcome to Where Are You</string>
+    <string name="sign_up">Sign up</string>
+    <string name="sign_in_if_account">Already have an account? Click</string>
+</resources>
