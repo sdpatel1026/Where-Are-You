@@ -135,7 +135,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         userDocument.setString(USER_NAME, username);
         userDocument.setString(PASSWORD, password);
         userDocument.setString(UID, ID);
-        userDocument.setString(IS_LOG_IN, "true");
+        userDocument.setBoolean(IS_LOG_IN, true);
         try {
             userListDb.save(userDocument);
         } catch (CouchbaseLiteException e) {

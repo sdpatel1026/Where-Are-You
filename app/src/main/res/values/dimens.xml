@@ -12,4 +12,26 @@
     <dimen name="dp_15_dp">15dp</dimen>
     <dimen name="dp_100_dp">100dp</dimen>
     <dimen name="dp_60_dp">60dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="dp_4_dp">4dp</dimen>
+
+
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_height">176dp</dimen>
+    <dimen name="dp_2_dp">2dp</dimen>
+    <dimen name="dp_8_dp">8dp</dimen>
+    <dimen name="dp_30_dp">30dp</dimen>
+    <dimen name="sp_18_sp">18sp</dimen>
+    <dimen name="sp_14_sp">14sp</dimen>
+    <dimen name="dp_6_dp">6dp</dimen>
+    <dimen name="dp_7_dp">7dp</dimen>
+    <dimen name="sp_16_sp">16sp</dimen>
+    <dimen name="dp_minus_23_dp">-23dp</dimen>
+    <dimen name="dp_320_dp">320dp</dimen>
+    <dimen name="dp_14_dp">14dp</dimen>
+    <dimen name="dp_12_dp">12dp</dimen>
+    <dimen name="dp_0_dp">0dp</dimen>
+
 </resources>

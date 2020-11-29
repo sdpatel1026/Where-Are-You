@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.github.library.bubbleview.BubbleTextView
+        android:id="@+id/tvBubbleRecieved"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="@dimen/dp_10_dp"
+        android:maxWidth="@dimen/dp_320_dp"
+        android:padding="@dimen/dp_14_dp"
+        android:text="Test chat"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp_16_sp"
+        app:angle="@dimen/dp_8_dp"
+        app:arrowHeight="@dimen/dp_10_dp"
+        app:arrowLocation="left"
+        app:arrowPosition="@dimen/dp_14_dp"
+        app:arrowWidth="@dimen/dp_12_dp"
+        app:bubbleColor="@color/chatReceived" />
+
+</RelativeLayout>

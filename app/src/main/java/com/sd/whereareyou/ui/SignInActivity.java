@@ -129,7 +129,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 // byte[] imageInByte = userDocument.getBlob(IMAGE).getContent();
                 String UUID = userDocument.getString(UID);
 
-                userDocument.setString(IS_LOG_IN, "true");
+                userDocument.setBoolean(IS_LOG_IN, true);
                 try {
                     userListDb.save(userDocument);
                 } catch (CouchbaseLiteException e) {

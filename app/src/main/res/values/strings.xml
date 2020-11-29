@@ -18,4 +18,8 @@
     <string name="password_length_msg">Password is too short.</string>
     <string name="user_name_is_used">Username is used</string>
     <string name="sign_up_failed">SignUp failed try again later</string>
+    <string name="log_out">Logout</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="chats">Chats</string>
 </resources>
