@@ -3,7 +3,7 @@ package com.sd.whereareyou.models;
 import java.io.Serializable;
 import java.net.InetAddress;
 
-class PeerInfo implements Serializable {
+public class PeerInfo implements Serializable {
 
     private String deviceName;
     private String deviceAddress;

@@ -40,12 +40,15 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import static com.sd.whereareyou.utils.Constants.FRIENDS_LIST_DB;
 import static com.sd.whereareyou.utils.Constants.FRIEND_UID;
 import static com.sd.whereareyou.utils.Constants.FRIEND_USER_NAME;
+import static com.sd.whereareyou.utils.Constants.UID;
+import static com.sd.whereareyou.utils.Constants.USER_NAME;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
-    private static final String FRIENDS_LIST_DB = "friendsListDB";
+
     private static final String TAG = HomeActivity.class.getName();
     Date time;
     private List<FriendBlock> friendBlockList;
@@ -89,6 +92,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             friendUsername = results.get(i).getString(FRIEND_USER_NAME);
             friendBlockList.add(new FriendBlock(friendUsername, friendUID, "3:20 pm"));
         }
+
+
         friendBlockList.add(new FriendBlock("sagar", "123", "3:20 pm"));
         friendBlockList.add(new FriendBlock("sagar", "123", "3:20 pm"));
         friendBlockList.add(new FriendBlock("sagar", "123", "3:20 pm"));
@@ -148,10 +153,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         toggle.syncState();
 
         Intent intent = getIntent();
+        myUsername = intent.getStringExtra(Constants.USER_NAME);
+        myUID = intent.getStringExtra(intent.getStringExtra(Constants.UID));
         tvNavUID = navigationView.getHeaderView(0).findViewById(R.id.navHeaderUID);
-        tvNavUID.setText(intent.getStringExtra(Constants.UID));
+        tvNavUID.setText(myUID);
         tvNavUsername = navigationView.getHeaderView(0).findViewById(R.id.navHeaderUsername);
-        tvNavUsername.setText(intent.getStringExtra(Constants.USER_NAME));
+        tvNavUsername.setText(myUsername);
 
 
     }
@@ -159,8 +166,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
 
-       /* Intent intent = new Intent(this,UserDiscovery.class);
-         startActivity(intent); */
+        Intent intent = new Intent(this, UserDiscovery.class);
+        intent.putExtra(USER_NAME, myUsername);
+        intent.putExtra(UID, myUID);
+        startActivity(intent);
     }
 
     public void onBackPressed() {

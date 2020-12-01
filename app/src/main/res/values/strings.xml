@@ -22,4 +22,17 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="chats">Chats</string>
+    <string name="near_by_user">Nearby Users</string>
+    <string name="group_removed">Previously cretaed group successfully removed.</string>
+    <string name="failed_to_remove_group">Failed to remove previously created group.</string>
+    <string name="searching">Searching...</string>
+    <string name="searching_failed">Searching failed ...</string>
+    <string name="WiFi_Off">Please turn on your WiFi</string>
+    <string name="disconnected">Disconnected</string>
+    <string name="connection_request_successful">Connection Request Successful</string>
+    <string name="connection_request_unsuccessful">Connection Request Unsuccessful</string>
+    <string name="new_device">New Device</string>
+    <string name="group_owner">Group Owner@</string>
+    <string name="something_wrong_msg">Something went wrong, please try again later</string>
+    <string name="empty_message">Message must not be empty</string>
 </resources>

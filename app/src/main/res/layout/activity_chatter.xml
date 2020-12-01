@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="@dimen/dp_4_dp"
+    tools:context=".ui.ChatterActivity">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabSendChatter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="@dimen/dp_8_dp"
+        android:layout_marginBottom="@dimen/dp_8_dp"
+        android:clickable="true"
+        android:src="@drawable/ic_send"
+        android:tint="@android:color/white" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabArChatter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/dp_6_dp"
+        android:layout_marginRight="@dimen/dp_6_dp"
+        android:layout_marginBottom="@dimen/dp_8_dp"
+        android:layout_toLeftOf="@+id/fabSendChatter"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:clickable="true"
+        android:src="@drawable/ic_armode"
+        android:tint="@android:color/white" />
+
+    <ListView
+        android:id="@+id/listViewChatter"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/edtMsgBoxChatter"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="@dimen/dp_4_dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="@dimen/dp_0_dp"
+        android:stackFromBottom="true"
+        android:transcriptMode="alwaysScroll"
+        android:windowSoftInputMode="stateVisible|adjustResize"></ListView>
+
+    <EditText
+        android:id="@+id/edtMsgBoxChatter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/dp_4_dp"
+        android:layout_marginTop="@dimen/dp_8_dp"
+        android:layout_marginRight="@dimen/dp_4_dp"
+        android:layout_marginBottom="@dimen/dp_12_dp"
+        android:layout_toLeftOf="@+id/fabArChatter"
+        android:background="@drawable/bg_rounded_corner"
+        android:hint="Enter your message..."
+        android:maxHeight="@dimen/dp_100_dp"
+        android:minHeight="@dimen/dp_20_dp"
+        android:outlineAmbientShadowColor="@android:color/black"
+        android:padding="@dimen/dp_10_dp"
+        android:stackFromBottom="true"
+        android:textSize="@dimen/sp_18_sp"
+        android:transcriptMode="alwaysScroll" />
+
+</RelativeLayout>
