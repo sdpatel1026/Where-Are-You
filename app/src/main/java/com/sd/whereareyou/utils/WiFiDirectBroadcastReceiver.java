@@ -55,6 +55,9 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
             // Indicate that Wifi is off. To use service please turn it on.
             if (state != WifiP2pManager.WIFI_P2P_STATE_ENABLED) {
                 Toast.makeText(context, context.getResources().getString(R.string.WiFi_Off), Toast.LENGTH_SHORT).show();
+            } else if (state == WifiP2pManager.WIFI_P2P_STATE_ENABLED) {
+                if (homeActivity != null)
+                    homeActivity.registerLocalService();
             }
         } else if (WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION.equals(action)) {
             // Notify to appropriate activity that available peers list has changed.

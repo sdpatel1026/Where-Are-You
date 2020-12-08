@@ -41,7 +41,7 @@ import static com.sd.whereareyou.utils.Constants.USER_NAME;
 public class UserDiscovery extends AppCompatActivity implements WifiP2pManager.ConnectionInfoListener {
 
 
-    private static final String TAG = UserDiscovery.class.getName();
+    private static final String TAG = UserDiscovery.class.getSimpleName();
     private final Map<String, String> deviceToUIDMap = new HashMap<String, String>();
     private final Map<String, String> deviceToUsernameMap = new HashMap<String, String>();
     private ListView listView;
@@ -67,8 +67,15 @@ public class UserDiscovery extends AppCompatActivity implements WifiP2pManager.C
         setContentView(R.layout.activity_user_discovery);
         initialiseUiElements();
         initialiseObjects();
+        removeGroup();
+        progressBar.setVisibility(View.VISIBLE);
+        discoverPeers();
 
-        // Check if group is already created, if yes, remove it
+
+    }
+
+    // Check if group is already created, if yes, remove it
+    private void removeGroup() {
         wifiP2pManager.requestGroupInfo(channel, new WifiP2pManager.GroupInfoListener() {
             @Override
             public void onGroupInfoAvailable(WifiP2pGroup wifiP2pGroup) {
@@ -88,13 +95,10 @@ public class UserDiscovery extends AppCompatActivity implements WifiP2pManager.C
 
             }
         });
-
-        progressBar.setVisibility(View.VISIBLE);
-        discoverPeers();
-
-
     }
 
+
+    //Discover available neerby peers
     private void discoverPeers() {
 
         peerInfoList.clear();
@@ -156,8 +160,19 @@ public class UserDiscovery extends AppCompatActivity implements WifiP2pManager.C
             }
 
             @Override
-            public void onFailure(int reason) {
-                tvSearchStatus.setText(String.format("%s%d", getResources().getString(R.string.searching_failed), reason));
+            public void onFailure(int error) {
+                tvSearchStatus.setText(String.format("%s%d", getResources().getString(R.string.searching_failed), error));
+                if (error == WifiP2pManager.P2P_UNSUPPORTED) {
+                    Log.d(TAG, "onFailure(): Wi-Fi P2P isn't supported on the device running the app.");
+                    Toast.makeText(UserDiscovery.this, getResources().getString(R.string.p2p_not_supported), Toast.LENGTH_SHORT).show();
+
+                } else if (error == WifiP2pManager.ERROR) {
+                    Toast.makeText(UserDiscovery.this, getResources().getString(R.string.p2p_error), Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "onFailure(): The operation failed due to an internal error.");
+                } else if (error == WifiP2pManager.BUSY) {
+                    Toast.makeText(UserDiscovery.this, getResources().getString(R.string.p2p_bussy), Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "onFailure(): The system is too busy to process the request.");
+                }
             }
         });
 
@@ -209,19 +224,6 @@ public class UserDiscovery extends AppCompatActivity implements WifiP2pManager.C
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        registerReceiver(broadcastReceiver, intentFilter);
-    }
-
-    @Override
-    protected void onPause() {
-        unregisterReceiver(broadcastReceiver);
-        super.onPause();
-
-    }
-
     // Start ChatterActivity if a connection is received instead of creating
     @Override
     public void onConnectionInfoAvailable(WifiP2pInfo p2pInfo) {
@@ -243,4 +245,26 @@ public class UserDiscovery extends AppCompatActivity implements WifiP2pManager.C
             finish();
         }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(broadcastReceiver, intentFilter);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(broadcastReceiver);
+
+
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return super.onSupportNavigateUp();
+    }
+
+
 }

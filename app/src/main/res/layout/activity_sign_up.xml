@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -12,6 +11,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/dp_80_dp"
         android:text="@string/welcome"
+        android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="@dimen/sp_30_sp"
         android:textStyle="bold" />
@@ -23,7 +23,7 @@
         android:layout_marginTop="@dimen/dp_5_dp"
         android:text="@string/sign_up"
         android:textColor="@color/black"
-        android:textSize="@dimen/sp_20_sp" />
+        android:textSize="@dimen/sp_25_sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -37,15 +37,15 @@
         android:id="@+id/edtUserNameSignUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_10_dp"
+        android:layout_marginTop="@dimen/dp_5_dp"
         android:textColor="@color/black"
         android:textSize="@dimen/sp_20_sp"
-        tools:text="For demo" />
+        android:inputType="text" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_20_dp"
+        android:layout_marginTop="@dimen/dp_10_dp"
         android:text="@string/password"
         android:textColor="@color/black"
         android:textSize="@dimen/sp_20_sp" />
@@ -54,15 +54,16 @@
         android:id="@+id/edtPasswordSignUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_10_dp"
+        android:layout_marginTop="@dimen/dp_5_dp"
         android:textColor="@color/black"
+        android:inputType="textPassword"
         android:textSize="@dimen/sp_20_sp" />
 
     <Button
         android:id="@+id/btnSignUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_20_dp"
+        android:layout_marginTop="@dimen/dp_15_dp"
         android:text="@string/sign_up"
         android:textSize="@dimen/sp_20_sp" />
 

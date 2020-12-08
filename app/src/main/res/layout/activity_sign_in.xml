@@ -35,7 +35,8 @@
         android:id="@+id/edtUserName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_10_dp"
+        android:layout_marginTop="@dimen/dp_5_dp"
+        android:inputType="text"
         android:textColor="@color/black"
         android:textSize="@dimen/sp_20_sp"
         tools:text="For demo" />
@@ -52,8 +53,9 @@
         android:id="@+id/edtPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_10_dp"
+        android:layout_marginTop="@dimen/dp_5_dp"
         android:textColor="@color/black"
+        android:inputType="textPassword"
         android:textSize="@dimen/sp_20_sp" />
 
     <TextView
@@ -64,7 +66,7 @@
         android:layout_marginTop="@dimen/dp_10_dp"
         android:text="@string/forgot_password"
         android:textColor="@color/black"
-        android:textSize="@dimen/sp_20_sp" />
+        android:textSize="@dimen/sp_15_sp" />
 
     <Button
         android:id="@+id/btnSignIn"
@@ -72,7 +74,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_15_dp"
         android:text="@string/sign_in"
-        android:textSize="@dimen/sp_20_sp" />
+        android:textSize="@dimen/sp_15_sp" />
 
     <TextView
         android:id="@+id/tvSignUp"
@@ -82,7 +84,7 @@
         android:layout_marginTop="@dimen/dp_10_dp"
         android:text="@string/sign_up_for_account"
         android:textColor="@color/black"
-        android:textSize="@dimen/sp_20_sp" />
+        android:textSize="@dimen/sp_15_sp" />
 
 
 </LinearLayout>

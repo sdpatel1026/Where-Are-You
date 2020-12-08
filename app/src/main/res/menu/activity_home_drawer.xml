@@ -7,6 +7,7 @@
         <item
             android:id="@+id/navLogout"
             android:icon="@drawable/ic_log_out"
+            android:checkable="false"
             android:title="@string/log_out" />
     </group>
 </menu>

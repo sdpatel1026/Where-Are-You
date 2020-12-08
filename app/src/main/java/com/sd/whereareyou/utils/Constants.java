@@ -1,7 +1,10 @@
 package com.sd.whereareyou.utils;
 
 public class Constants {
-    public static final String TXTRECORD_PROP_AVAILABLE = "available";
+    public static final String AVAILABLE = "available";
+    public static final String VISIBLE = "visible";
+    public static final String APP_NAME = "AppName";
+    public static final String WHERE_ARE_YOU = "Where Are You";
     public static final String SERVICE_INSTANCE = "_whereAreYou";
     public static final String SERVICE_REG_TYPE = "_presence._tcp";
     public static final String USERS_LIST_DB = "usersListDB";

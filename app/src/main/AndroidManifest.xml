@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
@@ -15,7 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.ChatterActivity"></activity>
+        <activity android:name=".ui.ChatterActivity" />
         <activity android:name=".ui.UserDiscovery" />
         <activity android:name=".ui.OldChatActivity" />
         <activity android:name=".ui.SignUpActivity" />
@@ -23,10 +25,11 @@
             android:name=".ui.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.SignInActivity" />
+
+        <!--Launcher Activity-->
         <activity android:name=".ui.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

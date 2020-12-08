@@ -71,7 +71,7 @@ import static com.sd.whereareyou.utils.Constants.USER_NAME;
 
 public class ChatterActivity extends AppCompatActivity implements View.OnClickListener, WifiP2pManager.ConnectionInfoListener, OnCreateSendReceiveListener {
 
-    private static final String TAG = ChatterActivity.class.getName();
+    private static final String TAG = "ChatterActivity";
 
     private static final String TYPE = "type";
     private static final String META = "meta";
@@ -331,6 +331,7 @@ public class ChatterActivity extends AppCompatActivity implements View.OnClickLi
 
     private void sendMessage() {
         String message = edtMsgBox.getText().toString();
+        //Check message is empty?
         if (message.isEmpty()) {
             Toast.makeText(this, getResources().getString(R.string.empty_message), Toast.LENGTH_SHORT).show();
             return;
@@ -346,6 +347,7 @@ public class ChatterActivity extends AppCompatActivity implements View.OnClickLi
             Toast.makeText(this, getResources().getString(R.string.something_wrong_msg), Toast.LENGTH_SHORT).show();
             Log.d(TAG, "sendMessage(): " + e.getMessage());
             e.printStackTrace();
+            return;
         }
 
 
@@ -450,5 +452,12 @@ public class ChatterActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onCreateSendReceive(SendReceive sendReceive) {
         this.sendReceive = sendReceive;
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return super.onSupportNavigateUp();
+
     }
 }

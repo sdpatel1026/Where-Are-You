@@ -132,17 +132,21 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 userDocument.setBoolean(IS_LOG_IN, true);
                 try {
                     userListDb.save(userDocument);
+                    Intent intent = new Intent(SignInActivity.this, HomeActivity.class);
+                    // intent.putExtra(IMAGE, imageInByte);
+                    intent.putExtra(UID, UUID);
+                    intent.putExtra(USER_DOC_ID, userDocId);
+                    intent.putExtra(USER_NAME, userName);
+                    startActivity(intent);
+                    finish();
                 } catch (CouchbaseLiteException e) {
+                    Toast.makeText(this, getResources().getString(R.string.something_wrong_msg), Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "onClick: ()" + e.getMessage());
                     e.printStackTrace();
+                    return;
                 }
 
-                Intent intent = new Intent(SignInActivity.this, HomeActivity.class);
-                // intent.putExtra(IMAGE, imageInByte);
-                intent.putExtra(UID, UUID);
-                intent.putExtra(USER_NAME, userName);
-                startActivity(intent);
-                finish();
+
             } else {
                 displayMsg(getResources().getString(R.string.invalid_password));
             }

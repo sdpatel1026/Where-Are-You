@@ -35,4 +35,8 @@
     <string name="group_owner">Group Owner@</string>
     <string name="something_wrong_msg">Something went wrong, please try again later</string>
     <string name="empty_message">Message must not be empty</string>
+    <string name="failed_to_add_service">Failed to add service</string>
+    <string name="p2p_not_supported">Wi-Fi P2P isn\'t supported on your device</string>
+    <string name="p2p_error">P2p internal error</string>
+    <string name="p2p_bussy">P2p bussy</string>
 </resources>

@@ -32,14 +32,10 @@ import static com.sd.whereareyou.utils.Constants.USER_NAME;
 public class SplashActivity extends AppCompatActivity {
 
     private static final String TAG = "SplashActivity";
-
-
     private Intent intent;
     private String myUID;
     private String myUserName;
     private String userDocId;
-
-
     private Handler handler;
     private DatabaseConfiguration dbConfig;
     private Database userDB;
@@ -48,11 +44,9 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
         //Initialise Dtaabase
         initialiseDataBase();
-
-
+        handler = new Handler();
         //check is user login or not?
         Boolean isUserLogin = false;
         try {
@@ -71,7 +65,7 @@ public class SplashActivity extends AppCompatActivity {
         } else {
             intent = new Intent(this, SignInActivity.class);
         }
-        handler = new Handler();
+
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -87,7 +81,7 @@ public class SplashActivity extends AppCompatActivity {
         Query query = QueryBuilder
                 .select(SelectResult.property(USER_DOC_ID))
                 .from(DataSource.database(userDB))
-                .where(Expression.property(IS_LOG_IN).equalTo(Expression.string("true")));
+                .where(Expression.property(IS_LOG_IN).equalTo(Expression.booleanValue(true)));
         ResultSet resultSet = query.execute();
 
         List<Result> results = resultSet.allResults();
@@ -105,7 +99,7 @@ public class SplashActivity extends AppCompatActivity {
             for (Result result : results) {
                 userDocId = result.getString(USER_DOC_ID);
                 MutableDocument mutableDocumentUserDoc = userDB.getDocument(userDocId).toMutable();
-                mutableDocumentUserDoc.setString(IS_LOG_IN, "false");
+                mutableDocumentUserDoc.setBoolean(IS_LOG_IN, false);
                 userDB.save(mutableDocumentUserDoc);
             }
         }
