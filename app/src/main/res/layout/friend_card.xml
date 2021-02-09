@@ -12,7 +12,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp_4_dp">
+        android:layout_margin="@dimen/dp_4_dp"
+        android:paddingLeft="@dimen/dp_8_dp">
 
         <TextView
             android:id="@+id/tvUserNameFriendCard"
@@ -20,7 +21,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="@dimen/dp_8_dp"
             android:layout_marginTop="@dimen/dp_7_dp"
             android:text="Username"
             android:textColor="@color/black"
@@ -30,11 +30,11 @@
             android:id="@+id/tvUIDFriendCard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/tvUserNameFriendCard"
-            android:layout_marginStart="@dimen/dp_8_dp"
-            android:layout_marginBottom="@dimen/dp_minus_23_dp"
+            android:layout_below="@+id/tvUserNameFriendCard"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="@dimen/dp_5_dp"
             android:text="UUID"
-            android:textColor="@android:color/darker_gray"
+            android:textColor="@color/black"
             android:textSize="@dimen/sp_16_sp" />
 
         <TextView

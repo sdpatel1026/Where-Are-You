@@ -19,7 +19,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
-    <dimen name="nav_header_height">176dp</dimen>
+    <dimen name="nav_header_height">256dp</dimen>
     <dimen name="dp_2_dp">2dp</dimen>
     <dimen name="dp_8_dp">8dp</dimen>
     <dimen name="dp_30_dp">30dp</dimen>
@@ -34,5 +34,11 @@
     <dimen name="dp_12_dp">12dp</dimen>
     <dimen name="dp_0_dp">0dp</dimen>
     <dimen name="sp_25_sp">25sp</dimen>
+    <dimen name="dp_50_dp">50dp</dimen>
+    <dimen name="dp_45_dp">45dp</dimen>
+    <dimen name="dp_16_dp">16dp</dimen>
+    <dimen name="dp_minus_15_dp">-15dp</dimen>
+    <dimen name="dp_minus_20_dp">-20dp</dimen>
+    <dimen name="dp_minus_25_dp">-25dp</dimen>
 
 </resources>

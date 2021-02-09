@@ -8,9 +8,11 @@ import android.net.wifi.WifiManager;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.nsd.WifiP2pDnsSdServiceInfo;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +32,7 @@ import com.sd.whereareyou.R;
 import com.sd.whereareyou.adapter.FriendListAdapter;
 import com.sd.whereareyou.models.FriendBlock;
 import com.sd.whereareyou.utils.Constants;
+import com.sd.whereareyou.utils.PermissionHelper;
 import com.sd.whereareyou.utils.WiFiDirectBroadcastReceiver;
 
 import java.util.ArrayList;
@@ -62,6 +65,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private static final String TAG = "HomeActivity";
+    private static final int WIFI_ENABLE_CODE = 131;
     private String userDocId;
     private List<FriendBlock> friendBlockList;
     private RecyclerView recyclerView;
@@ -70,7 +74,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
-    private TextView tvNavUID, tvNavUsername;
+    private TextView tvNavUID, tvNavUsername, tvWifiStatus;
+    private Button btnWifiStart;
     private FloatingActionButton fab;
     private WifiManager wifiManager;
     private WifiP2pManager wifiP2pManager;
@@ -87,12 +92,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        PermissionHelper.checkAndRequestRequiredPermission(getApplicationContext());
         Intent intent = getIntent();
         userDocId = intent.getStringExtra(Constants.USER_DOC_ID);
         myUsername = intent.getStringExtra(Constants.USER_NAME);
-        myUID = intent.getStringExtra(intent.getStringExtra(Constants.UID));
-        Toast.makeText(this, "onCreate:  " + userDocId, Toast.LENGTH_SHORT).show();
-
+        myUID = intent.getStringExtra(UID);
         intialiseUiElements();
         initialiseObjects();
 
@@ -123,10 +127,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                     Log.d(TAG, "onFailure(): Wi-Fi P2P isn't supported on the device running the app.");
 
                 } else if (error == WifiP2pManager.ERROR) {
-                    Toast.makeText(HomeActivity.this, getResources().getString(R.string.p2p_error), Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "onFailure(): The operation failed due to an internal error.");
                 } else if (error == WifiP2pManager.BUSY) {
-                    Toast.makeText(HomeActivity.this, getResources().getString(R.string.p2p_bussy), Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "onFailure(): The system is too busy to process the request.");
                 }
                 //Toast.makeText(HomeActivity.this, getResources().getString(R.string.failed_to_add_service), Toast.LENGTH_SHORT).show();
@@ -165,7 +167,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         }
 
 
-        wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+        wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         wifiP2pManager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
         channel = wifiP2pManager.initialize(this, getMainLooper(), null);
         //Create broadcast_receiver object and filter
@@ -203,6 +205,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         drawerLayout = findViewById(R.id.drawerLayoutHome);
         navigationView = findViewById(R.id.navViewHome);
         tvNavUsername = findViewById(R.id.navHeaderUsername);
+        tvWifiStatus = findViewById(R.id.tvWifiStatusHome);
+        btnWifiStart = findViewById(R.id.btnWifiStartHome);
+        btnWifiStart.setOnClickListener(this);
         fab = findViewById(R.id.fabHome);
 
 
@@ -220,6 +225,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         tvNavUID = navigationView.getHeaderView(0).findViewById(R.id.navHeaderUID);
         tvNavUID.setText(myUID);
+
         tvNavUsername = navigationView.getHeaderView(0).findViewById(R.id.navHeaderUsername);
         tvNavUsername.setText(myUsername);
         Log.d(TAG, "intialiseUiElements: DOCID-UI" + userDocId);
@@ -230,6 +236,30 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
+
+        switch (view.getId()) {
+            case R.id.fabHome:
+                startUserDiscoveryActivity();
+                break;
+            case R.id.btnWifiStartHome:
+                onWifiStart();
+                break;
+        }
+
+    }
+
+    public void onWifiStart() {
+        if (!wifiManager.isWifiEnabled()) {
+            Intent wifiIntent = new Intent(Settings.Panel.ACTION_WIFI);
+            startActivityForResult(wifiIntent, WIFI_ENABLE_CODE);
+
+        }
+
+        tvWifiStatus.setVisibility(View.GONE);
+        btnWifiStart.setVisibility(View.GONE);
+    }
+
+    private void startUserDiscoveryActivity() {
 
         Intent userDiscoveryIntent = new Intent(this, UserDiscovery.class);
         userDiscoveryIntent.putExtra(USER_NAME, myUsername);
@@ -250,6 +280,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     protected void onResume() {
         super.onResume();
         registerReceiver(broadcastReceiver, intentFilter);
+        if (!wifiManager.isWifiEnabled()) {
+            onWifiOff();
+        }
 
     }
 
@@ -303,5 +336,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             Log.d(TAG, "onStart(): " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    public void onWifiOff() {
+
+        tvWifiStatus.setVisibility(View.VISIBLE);
+        btnWifiStart.setVisibility(View.VISIBLE);
     }
 }

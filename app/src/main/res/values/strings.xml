@@ -39,4 +39,21 @@
     <string name="p2p_not_supported">Wi-Fi P2P isn\'t supported on your device</string>
     <string name="p2p_error">P2p internal error</string>
     <string name="p2p_bussy">P2p bussy</string>
+    <string name="hey_i_am_here">Hey, I\'m Here</string>
+    <string name="waiting_for_gps">Waiting for GPS...</string>
+    <string name="enable_location">Enable Location</string>
+    <string name="location_setting_enable_message">Your locations setting is not enabled. Please enabled it in settings menu.</string>
+    <string name="location_setting">Location Setting</string>
+    <string name="cancel">Cancel</string>
+    <string name="meteres">mts</string>
+    <string name="friends_location_doesnt_identify">Location from friend not yet received. No GPS signal.</string>
+    <string name="location_provide_disabled">Please turn your location.</string>
+    <string name="turn_on_location">Please turn your location</string>
+    <string name="enable_camera">Enable Your Camera</string>
+    <string name="Camera_setting_enable_message">Your camera setting is not enabled. Please enabled it in settings menu.</string>
+    <string name="Camera_setting">Camera Setting</string>
+    <string name="WiFi_Off_msg">Your wifi is turned off</string>
+    <string name="turn_on">Enable WiFi</string>
+    <string name="turn_on_wifi_msg">Please turn on your wifi</string>
+    <string name="kms">Km</string>
 </resources>

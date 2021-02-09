@@ -11,10 +11,12 @@ import android.net.wifi.p2p.WifiP2pInfo;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.nsd.WifiP2pDnsSdServiceRequest;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -31,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import static com.sd.whereareyou.utils.Constants.IS_GROUP_OWNER;
 import static com.sd.whereareyou.utils.Constants.PEER;
@@ -42,10 +45,13 @@ public class UserDiscovery extends AppCompatActivity implements WifiP2pManager.C
 
 
     private static final String TAG = UserDiscovery.class.getSimpleName();
+    private static final int WIFI_ENABLE_CODE = 132;
     private final Map<String, String> deviceToUIDMap = new HashMap<String, String>();
     private final Map<String, String> deviceToUsernameMap = new HashMap<String, String>();
     private ListView listView;
-    private TextView tvSearchStatus;
+    private TextView tvSearchStatus, tvWifiStatus;
+    private Button btnWifiStart;
+    private Toolbar toolbar;
     private WifiManager wifiManager;
     private WifiP2pManager wifiP2pManager;
     private WifiP2pManager.Channel channel;
@@ -161,7 +167,8 @@ public class UserDiscovery extends AppCompatActivity implements WifiP2pManager.C
 
             @Override
             public void onFailure(int error) {
-                tvSearchStatus.setText(String.format("%s%d", getResources().getString(R.string.searching_failed), error));
+                tvSearchStatus.setText(getString(R.string.searching_failed));
+                progressBar.setVisibility(View.GONE);
                 if (error == WifiP2pManager.P2P_UNSUPPORTED) {
                     Log.d(TAG, "onFailure(): Wi-Fi P2P isn't supported on the device running the app.");
                     Toast.makeText(UserDiscovery.this, getResources().getString(R.string.p2p_not_supported), Toast.LENGTH_SHORT).show();
@@ -180,6 +187,7 @@ public class UserDiscovery extends AppCompatActivity implements WifiP2pManager.C
 
     private void initialiseObjects() {
 
+        wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         wifiP2pManager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
         channel = wifiP2pManager.initialize(this, getMainLooper(), null);
         broadcastReceiver = new WiFiDirectBroadcastReceiver(wifiP2pManager, channel, this);
@@ -201,6 +209,16 @@ public class UserDiscovery extends AppCompatActivity implements WifiP2pManager.C
         listView = findViewById(R.id.listViewUserDiscovery);
         progressBar = findViewById(R.id.progressBarUserDiscovery);
         tvSearchStatus = findViewById(R.id.tvSearchStatusUserDiscovery);
+        tvWifiStatus = findViewById(R.id.tvWifiStatusUserDiscovery);
+        btnWifiStart = findViewById(R.id.btnWifiStartUserDiscovery);
+        btnWifiStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onWifiStart();
+            }
+        });
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getResources().getString(R.string.near_by_user));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -250,6 +268,9 @@ public class UserDiscovery extends AppCompatActivity implements WifiP2pManager.C
     protected void onResume() {
         super.onResume();
         registerReceiver(broadcastReceiver, intentFilter);
+        if (!wifiManager.isWifiEnabled()) {
+            onWifiOff();
+        }
     }
 
     @Override
@@ -267,4 +288,21 @@ public class UserDiscovery extends AppCompatActivity implements WifiP2pManager.C
     }
 
 
+    public void onWifiOff() {
+        tvWifiStatus.setVisibility(View.VISIBLE);
+        btnWifiStart.setVisibility(View.VISIBLE);
+        listView.setVisibility(View.GONE);
+    }
+
+    public void onWifiStart() {
+
+        if (!wifiManager.isWifiEnabled()) {
+            Intent wifiIntent = new Intent(Settings.Panel.ACTION_WIFI);
+            startActivityForResult(wifiIntent, WIFI_ENABLE_CODE);
+        }
+
+        tvWifiStatus.setVisibility(View.GONE);
+        btnWifiStart.setVisibility(View.GONE);
+        listView.setVisibility(View.VISIBLE);
+    }
 }

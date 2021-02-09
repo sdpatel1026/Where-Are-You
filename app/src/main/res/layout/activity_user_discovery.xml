@@ -6,13 +6,8 @@
     android:orientation="vertical"
     tools:context=".ui.UserDiscovery">
 
-    <TextView
-        android:id="@+id/tvSearchStatusUserDiscovery"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textSize="@dimen/sp_18_sp" />
+    <include layout="@layout/common_toolbar" />
+
 
     <ProgressBar
         android:id="@+id/progressBarUserDiscovery"
@@ -21,9 +16,41 @@
         android:layout_height="wrap_content"
         android:indeterminate="true" />
 
+    <TextView
+        android:id="@+id/tvSearchStatusUserDiscovery"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_4_dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="@color/error_color"
+        android:textSize="@dimen/sp_18_sp" />
+
+    <TextView
+        android:id="@+id/tvWifiStatusUserDiscovery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_150_dp"
+        android:text="@string/WiFi_Off_msg"
+        android:textColor="@color/error_color"
+        android:textSize="@dimen/sp_20_sp"
+        android:visibility="visible" />
+
+    <Button
+        android:id="@+id/btnWifiStartUserDiscovery"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/tvWifiStatusHome"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_4_dp"
+        android:text="@string/turn_on"
+        android:visibility="visible" />
+
     <ListView
         android:id="@+id/listViewUserDiscovery"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></ListView>
+        android:layout_height="match_parent" />
 
 </LinearLayout>

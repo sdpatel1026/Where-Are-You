@@ -98,8 +98,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void signInUser() {
-        String userName = edtUserName.getText().toString().toUpperCase();
-        String password = edtPassword.getText().toString();
+        String userName = edtUserName.getText().toString().toUpperCase().trim();
+        String password = edtPassword.getText().toString().trim();
         Query query = QueryBuilder.select(SelectResult.property(Constants.USER_NAME))
                 .from(DataSource.database(userListDb))
                 .where(Expression.property(Constants.USER_NAME).equalTo(Expression.string(userName)));
@@ -121,6 +121,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 resultSet = query.execute();
             } catch (CouchbaseLiteException e) {
                 e.printStackTrace();
+                return;
             }
             Result result = resultSet.allResults().get(0);
             String userDocId = result.getString(USER_DOC_ID);
@@ -128,7 +129,6 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             if (userDocument.getString(PASSWORD).equals(password)) {
                 // byte[] imageInByte = userDocument.getBlob(IMAGE).getContent();
                 String UUID = userDocument.getString(UID);
-
                 userDocument.setBoolean(IS_LOG_IN, true);
                 try {
                     userListDb.save(userDocument);
@@ -141,6 +141,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                     finish();
                 } catch (CouchbaseLiteException e) {
                     Toast.makeText(this, getResources().getString(R.string.something_wrong_msg), Toast.LENGTH_SHORT).show();
+                    userDocument.setBoolean(IS_LOG_IN, false);
                     Log.d(TAG, "onClick: ()" + e.getMessage());
                     e.printStackTrace();
                     return;

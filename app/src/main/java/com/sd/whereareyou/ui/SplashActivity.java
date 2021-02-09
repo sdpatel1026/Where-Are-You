@@ -60,6 +60,7 @@ public class SplashActivity extends AppCompatActivity {
         if (isUserLogin) {
             intent = new Intent(this, HomeActivity.class);
             intent.putExtra(UID, myUID);
+            Log.d(TAG, "onCreate: " + myUID);
             intent.putExtra(USER_NAME, myUserName);
             intent.putExtra(USER_DOC_ID, userDocId);
         } else {
@@ -92,6 +93,7 @@ public class SplashActivity extends AppCompatActivity {
             Document userDoc = userDB.getDocument(userDocId);
             myUserName = userDoc.getString(USER_NAME);
             myUID = userDoc.getString(UID);
+            Log.d(TAG, "checkIsUserLogin: " + myUID);
             return true;
 
         } else if (size > 1) {

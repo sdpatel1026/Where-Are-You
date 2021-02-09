@@ -5,14 +5,21 @@
     android:orientation="vertical"
     android:padding="@dimen/dp_15_dp">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_150_dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/logo_png" />
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/dp_80_dp"
+        android:layout_marginTop="@dimen/dp_10_dp"
         android:text="@string/welcome"
         android:textAlignment="center"
-        android:textColor="@color/black"
+        android:textColor="@color/black_shade"
         android:textSize="@dimen/sp_30_sp"
         android:textStyle="bold" />
 
@@ -22,15 +29,15 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/dp_5_dp"
         android:text="@string/sign_up"
-        android:textColor="@color/black"
+        android:textColor="@color/colorAccent"
         android:textSize="@dimen/sp_25_sp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_60_dp"
+        android:layout_marginTop="@dimen/dp_30_dp"
         android:text="@string/user_name"
-        android:textColor="@color/black"
+        android:textColor="@color/black_shade"
         android:textSize="@dimen/sp_20_sp" />
 
     <androidx.appcompat.widget.AppCompatEditText
@@ -40,6 +47,7 @@
         android:layout_marginTop="@dimen/dp_5_dp"
         android:textColor="@color/black"
         android:textSize="@dimen/sp_20_sp"
+        android:backgroundTint="@color/colorAccent"
         android:inputType="text" />
 
     <TextView
@@ -47,7 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_10_dp"
         android:text="@string/password"
-        android:textColor="@color/black"
+        android:textColor="@color/black_shade"
         android:textSize="@dimen/sp_20_sp" />
 
     <androidx.appcompat.widget.AppCompatEditText
@@ -56,6 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_5_dp"
         android:textColor="@color/black"
+        android:backgroundTint="@color/colorAccent"
         android:inputType="textPassword"
         android:textSize="@dimen/sp_20_sp" />
 
@@ -63,6 +72,8 @@
         android:id="@+id/btnSignUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:textColor="@color/black_shade"
         android:layout_marginTop="@dimen/dp_15_dp"
         android:text="@string/sign_up"
         android:textSize="@dimen/sp_20_sp" />
@@ -74,8 +85,8 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/dp_10_dp"
         android:text="@string/sign_in_if_account"
-        android:textColor="@color/black"
-        android:textSize="@dimen/sp_20_sp" />
+        android:textColor="@color/black_shade"
+        android:textSize="@dimen/sp_15_sp" />
 </LinearLayout>
 
 

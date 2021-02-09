@@ -28,6 +28,8 @@ public class Constants {
     public static final String PEER = "peer";
     public static final String IS_GROUP_OWNER = "isGroupOwner";
     public static final int MESSAGE_READ = 1;
+    public static final String TARGET_LAT = "targetLat";
+    public static final String TARGET_LONG = "targetLong";
 
 
     //public static final String CHATS_DB = "chatsDB";

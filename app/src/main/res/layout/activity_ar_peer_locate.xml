@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_ar"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <SurfaceView
+        android:id="@+id/surfaceView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/tvDirection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/sp_30_sp" />
+
+    <ImageView
+        android:id="@+id/ivCompass"
+        android:layout_width="@dimen/dp_50_dp"
+        android:layout_height="@dimen/dp_50_dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/dp_16_dp"
+        android:layout_marginRight="@dimen/dp_10_dp"
+        android:layout_marginBottom="@dimen/dp_45_dp"
+        android:layout_toLeftOf="@+id/tvDistance"
+        android:src="@drawable/ic_compass" />
+
+    <com.github.library.bubbleview.BubbleTextView
+        android:id="@+id/tvBubble"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:padding="@dimen/dp_10_dp"
+        android:text="@string/hey_i_am_here"
+        android:visibility="gone"
+        app:angle="@dimen/dp_10_dp"
+        app:arrowHeight="@dimen/dp_20_dp"
+        app:arrowLocation="bottom"
+        app:arrowPosition="@dimen/dp_14_dp"
+        app:arrowWidth="@dimen/dp_20_dp"
+        app:bubbleColor="@color/chatSend" />
+
+    <TextView
+        android:id="@+id/tvDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="@dimen/dp_45_dp"
+        android:background="@drawable/bg_round_corner_green"
+        android:padding="@dimen/dp_10_dp"
+        android:paddingStart="@dimen/dp_20_dp"
+        android:paddingEnd="@dimen/dp_20_dp"
+        android:text="@string/waiting_for_gps"
+        android:textAlignment="center"
+
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp_20_sp" />
+
+    <TextView
+        android:id="@+id/tvTargetDirection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/sp_30_sp"
+        android:visibility="invisible" />
+
+</RelativeLayout>

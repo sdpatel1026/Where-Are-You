@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 public class OldChatActivity extends AppCompatActivity {
 
@@ -36,6 +37,7 @@ public class OldChatActivity extends AppCompatActivity {
     private List<Chat> chatsList;
     private CustomAdapter adapter;
     private String friendUID, friendUserName;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,11 +58,12 @@ public class OldChatActivity extends AppCompatActivity {
         Intent intent = getIntent();
         friendUID = intent.getStringExtra(Constants.FRIEND_UID);
         friendUserName = intent.getStringExtra(Constants.FRIEND_USER_NAME);
-
-        getSupportActionBar().setTitle(friendUserName);
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        Log.d(TAG, "initialiseStuffs: " + friendUserName);
+       /* getSupportActionBar().setTitle(friendUserName);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-
+        getSupportActionBar().setDisplayShowHomeEnabled(true);*/
         try {
             chatsDb = new Database(friendUID, dbConfig);
 

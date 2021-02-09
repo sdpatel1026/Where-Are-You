@@ -3,8 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:padding="@dimen/dp_4_dp"
     tools:context=".ui.ChatterActivity">
+
+    <include
+        android:id="@+id/toolbar_chatter"
+        layout="@layout/common_toolbar" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabSendChatter"
@@ -38,10 +41,11 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/edtMsgBoxChatter"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/toolbar_chatter"
         android:layout_marginBottom="@dimen/dp_4_dp"
         android:divider="@android:color/transparent"
         android:dividerHeight="@dimen/dp_0_dp"
+        android:padding="@dimen/dp_4_dp"
         android:stackFromBottom="true"
         android:transcriptMode="alwaysScroll"
         android:windowSoftInputMode="stateVisible|adjustResize"></ListView>
@@ -52,7 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="@dimen/dp_4_dp"
+        android:layout_marginLeft="@dimen/dp_8_dp"
         android:layout_marginTop="@dimen/dp_8_dp"
         android:layout_marginRight="@dimen/dp_4_dp"
         android:layout_marginBottom="@dimen/dp_12_dp"

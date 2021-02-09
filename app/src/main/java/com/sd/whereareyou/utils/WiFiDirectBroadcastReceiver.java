@@ -5,9 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.NetworkInfo;
 import android.net.wifi.p2p.WifiP2pManager;
-import android.widget.Toast;
+import android.util.Log;
 
-import com.sd.whereareyou.R;
 import com.sd.whereareyou.ui.ChatterActivity;
 import com.sd.whereareyou.ui.HomeActivity;
 import com.sd.whereareyou.ui.UserDiscovery;
@@ -20,6 +19,7 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
     private UserDiscovery userDiscoveryActivity;
     private ChatterActivity chatterActivity;
     private HomeActivity homeActivity;
+    private static final String TAG = "WiFiDirectBroadcastReceiver";
 
     public WiFiDirectBroadcastReceiver(WifiP2pManager manager, WifiP2pManager.Channel channel, UserDiscovery userDiscoveryActivity) {
         wifiP2pManager = manager;
@@ -54,10 +54,22 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
 
             // Indicate that Wifi is off. To use service please turn it on.
             if (state != WifiP2pManager.WIFI_P2P_STATE_ENABLED) {
-                Toast.makeText(context, context.getResources().getString(R.string.WiFi_Off), Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onReceive: wifiOff");
+                if (homeActivity != null) {
+                    homeActivity.onWifiOff();
+                } else if (userDiscoveryActivity != null) {
+                    userDiscoveryActivity.onWifiOff();
+                }
+
             } else if (state == WifiP2pManager.WIFI_P2P_STATE_ENABLED) {
-                if (homeActivity != null)
+                Log.d(TAG, "onReceive: wifiOn");
+                if (homeActivity != null) {
+
+                    homeActivity.onWifiStart();
                     homeActivity.registerLocalService();
+                } else if (userDiscoveryActivity != null) {
+                    userDiscoveryActivity.onWifiStart();
+                }
             }
         } else if (WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION.equals(action)) {
             // Notify to appropriate activity that available peers list has changed.
@@ -77,19 +89,20 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
                     if (networkInfo.isConnected()) {
                         wifiP2pManager.requestConnectionInfo(channel, (WifiP2pManager.ConnectionInfoListener) userDiscoveryActivity);
                     } else {
-                        Toast.makeText(context, context.getResources().getString(R.string.disconnected), Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "onReceive: Disconnected");
+
                     }
                 } else if (chatterActivity != null) {
                     if (networkInfo.isConnected()) {
                         wifiP2pManager.requestConnectionInfo(channel, (WifiP2pManager.ConnectionInfoListener) chatterActivity);
                     } else {
-                        Toast.makeText(context, context.getResources().getString(R.string.disconnected), Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "onReceive: Disconnected");
                     }
                 } else if (homeActivity != null) {
                     if (networkInfo.isConnected()) {
                         // wifiP2pManager.requestConnectionInfo(channel, (WifiP2pManager.ConnectionInfoListener) homeActivity);
                     } else {
-                        Toast.makeText(context, context.getResources().getString(R.string.disconnected), Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "onReceive: Disconnected");
                     }
                 }
             }

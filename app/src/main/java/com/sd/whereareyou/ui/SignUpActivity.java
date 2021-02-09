@@ -34,7 +34,7 @@ import static com.sd.whereareyou.utils.Constants.USER_NAME;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static final String TAG = SignUpActivity.class.getName() ;
+    private static final String TAG = "SignUpActivity";
     private Button btnSignUp;
     private AppCompatEditText edtUserName,edtPassword;
     private TextView tvSignIn;
@@ -95,8 +95,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     private void signUpUser() {
 
-        String username = edtUserName.getText().toString().toUpperCase();
-        String password = edtPassword.getText().toString();
+        String username = edtUserName.getText().toString().toUpperCase().trim();
+        String password = edtPassword.getText().toString().trim();
         if (username.isEmpty()) {
             displayMsg(getResources().getString(R.string.username_required));
             return;
@@ -127,8 +127,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             return;
         }
         String ID = generateUID(username);
-
-
         MutableDocument userDocument = new MutableDocument();
         String userDocId = userDocument.getId();
         userDocument.setString(USER_DOC_ID, userDocId);
@@ -147,6 +145,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             Intent intent = new Intent(this, HomeActivity.class);
             intent.putExtra(USER_DOC_ID, userDocId);
             intent.putExtra(UID, ID);
+            Log.d(TAG, "signUpUser: " + ID);
             intent.putExtra(USER_NAME, username);
             startActivity(intent);
             finish();
@@ -159,8 +158,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     //generate Unique ID for each user
     private String generateUID(String username) {
         Random random = new Random();
-        int randomNum = random.nextInt(1000000);
-        randomNum = random.nextInt(1000000000);
+        int randomNum = random.nextInt(1000000000);
         return (username + randomNum);
     }
 }

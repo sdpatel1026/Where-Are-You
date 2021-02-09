@@ -1,10 +1,13 @@
 package com.sd.whereareyou.ui;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.wifi.WifiManager;
 import android.net.wifi.WpsInfo;
@@ -32,6 +35,7 @@ import com.couchbase.lite.Query;
 import com.couchbase.lite.QueryBuilder;
 import com.couchbase.lite.ResultSet;
 import com.couchbase.lite.SelectResult;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.sd.whereareyou.R;
 import com.sd.whereareyou.adapter.CustomAdapter;
@@ -40,6 +44,7 @@ import com.sd.whereareyou.models.PeerInfo;
 import com.sd.whereareyou.utils.ClientClass;
 import com.sd.whereareyou.utils.Constants;
 import com.sd.whereareyou.utils.OnCreateSendReceiveListener;
+import com.sd.whereareyou.utils.PermissionHelper;
 import com.sd.whereareyou.utils.SendReceive;
 import com.sd.whereareyou.utils.ServerClass;
 import com.sd.whereareyou.utils.WiFiDirectBroadcastReceiver;
@@ -52,6 +57,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import static com.sd.whereareyou.utils.Constants.CHAT_TYPE;
 import static com.sd.whereareyou.utils.Constants.DEVICE_TYPE;
@@ -66,6 +72,8 @@ import static com.sd.whereareyou.utils.Constants.MESSAGE_READ;
 import static com.sd.whereareyou.utils.Constants.RECEIVE;
 import static com.sd.whereareyou.utils.Constants.RECEIVE_CONNECTION;
 import static com.sd.whereareyou.utils.Constants.SEND;
+import static com.sd.whereareyou.utils.Constants.TARGET_LAT;
+import static com.sd.whereareyou.utils.Constants.TARGET_LONG;
 import static com.sd.whereareyou.utils.Constants.UID;
 import static com.sd.whereareyou.utils.Constants.USER_NAME;
 
@@ -85,6 +93,7 @@ public class ChatterActivity extends AppCompatActivity implements View.OnClickLi
     private FloatingActionButton btnAr;
     private EditText edtMsgBox;
     private ListView listViewMsg;
+    private MaterialToolbar toolbar;
 
     private Handler handler;
     private PeerInfo peerInfo;
@@ -127,9 +136,9 @@ public class ChatterActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatter);
-
         initialiseUiElements();
         initialiseObjects();
+        setUpLocationManager();
         createHandler();
         Intent intent = getIntent();
         peerInfo = (PeerInfo) intent.getSerializableExtra(Constants.PEER);
@@ -139,13 +148,47 @@ public class ChatterActivity extends AppCompatActivity implements View.OnClickLi
 
         if (deviceType.equals(INIT_CONNECTION)) {
             initiateConnection(INIT_CONNECTION, peerInfo);
-            friendUID = peerInfo.getUid();
+            friendUID = peerInfo.getUid() + myUID;
             friendUsername = peerInfo.getUsername();
         } else if (deviceType.equals(RECEIVE_CONNECTION)) {
             isGroupOwner = intent.getBooleanExtra(IS_GROUP_OWNER, false);
             initiateConnection(RECEIVE_CONNECTION, peerInfo);
         }
 
+    }
+
+    private void setUpLocationManager() {
+
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        LocationListener locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                myLat = location.getLatitude();
+                myLong = location.getLongitude();
+                myLocation = location;
+            }
+
+            @Override
+            public void onStatusChanged(String s, int i, Bundle bundle) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String s) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String s) {
+                Toast.makeText(ChatterActivity.this, getString(R.string.location_provide_disabled), Toast.LENGTH_SHORT).show();
+            }
+        };
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            PermissionHelper.enableLocationPermission(this);
+            return;
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, locationListener);
     }
 
 
@@ -237,7 +280,7 @@ public class ChatterActivity extends AppCompatActivity implements View.OnClickLi
             JSONObject parsedMessage = new JSONObject(tempMsg);
             if (parsedMessage.get(TYPE).equals(META)) {
                 friendUsername = parsedMessage.getString(USER_NAME);
-                friendUID = parsedMessage.getString(UID);
+                friendUID = parsedMessage.getString(UID) + myUID;
                 getSupportActionBar().setTitle(friendUsername);
                 storeFriendToDB(friendUsername, friendUID);
 
@@ -298,6 +341,9 @@ public class ChatterActivity extends AppCompatActivity implements View.OnClickLi
         btnSend.setOnClickListener(this);
         btnAr.setOnClickListener(this);
 
+
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
@@ -306,6 +352,10 @@ public class ChatterActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onResume() {
         super.onResume();
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            PermissionHelper.enableLocationPermission(this);
+
+        }
         registerReceiver(broadcastReceiver, intentFilter);
     }
 
@@ -321,22 +371,42 @@ public class ChatterActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.fabSendChatter:
                 // send message
                 sendMessage();
-
                 break;
             case R.id.fabArChatter:
-                // start AR activity
+                //start AR Activity
+                startARPeerLocateActivity();
+
                 break;
         }
     }
 
+    private void startARPeerLocateActivity() {
+
+        if (friendLat != null && friendLong != null) {
+            Intent ARPeerLocateintent = new Intent(this, ARPeerLocateActivity.class);
+            ARPeerLocateintent.putExtra(FRIEND_USER_NAME, friendUsername);
+            ARPeerLocateintent.putExtra(TARGET_LAT, friendLat);
+            ARPeerLocateintent.putExtra(TARGET_LONG, friendLong);
+            startActivity(ARPeerLocateintent);
+        } else {
+            Toast.makeText(this, getResources().getString(R.string.friends_location_doesnt_identify), Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private void sendMessage() {
+
+
         String message = edtMsgBox.getText().toString();
         //Check message is empty?
         if (message.isEmpty()) {
             Toast.makeText(this, getResources().getString(R.string.empty_message), Toast.LENGTH_SHORT).show();
             return;
         }
-
+        // check wifi is enable or not
+        if (!wifiManager.isWifiEnabled()) {
+            Toast.makeText(this, getString(R.string.turn_on_wifi_msg), Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         //Send identity to verify connection
         try {
@@ -352,8 +422,12 @@ public class ChatterActivity extends AppCompatActivity implements View.OnClickLi
 
 
         try {
-            // String packetToSend = createJSONChat(message, myLat.toString(), myLong.toString());
-            String packetToSend = createJSONChat(message, "30.3827", "31.0932");
+
+            if (myLat == null || myLong == null) {
+                Toast.makeText(this, getString(R.string.turn_on_location), Toast.LENGTH_SHORT).show();
+                return;
+            }
+            String packetToSend = createJSONChat(message, myLat.toString(), myLong.toString());
 
             //Send message to peer
             sendReceive.write(packetToSend.getBytes());

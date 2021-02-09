@@ -15,4 +15,26 @@
         android:padding="@dimen/dp_4_dp"
         android:scrollbars="vertical" />
 
+    <TextView
+        android:id="@+id/tvWifiStatusHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnWifiStartHome"
+        android:layout_centerHorizontal="true"
+        android:text="@string/WiFi_Off_msg"
+        android:textColor="@color/error_color"
+        android:textSize="@dimen/sp_20_sp"
+        android:visibility="visible" />
+
+    <Button
+        android:id="@+id/btnWifiStartHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_2_dp"
+        android:layout_marginBottom="@dimen/dp_14_dp"
+        android:text="@string/turn_on"
+        android:visibility="visible" />
+
 </RelativeLayout>

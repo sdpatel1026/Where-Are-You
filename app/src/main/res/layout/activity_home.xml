@@ -8,6 +8,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:openDrawer="start">
 
+
     <include
         layout="@layout/app_bar_home"
         android:layout_width="match_parent"
@@ -19,6 +20,10 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
+        android:background="@color/white"
+        app:itemIconPadding="@dimen/dp_15_dp"
+        app:itemIconTint="@color/black_shade"
+        app:itemTextColor="@color/black_shade"
         app:headerLayout="@layout/nav_header_home"
         app:menu="@menu/activity_home_drawer" />
 
